@@ -1,0 +1,261 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versión del servidor:         8.1.0 - MySQL Community Server - GPL
+-- SO del servidor:              Linux
+-- HeidiSQL Versión:             12.5.0.6677
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+
+-- Volcando estructura de base de datos para educacionit-desafio5
+CREATE DATABASE IF NOT EXISTS `educacionit-desafio5` /*!40100 DEFAULT CHARACTER SET latin1 COLLATE latin1_spanish_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `educacionit-desafio5`;
+
+-- Volcando estructura para tabla educacionit-desafio5.ABILITIES
+CREATE TABLE IF NOT EXISTS `ABILITIES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `url` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.ADDRESSES
+CREATE TABLE IF NOT EXISTS `ADDRESSES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `street` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `suite` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `city` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `zipcode` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `lat` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `lng` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.COMPANIES
+CREATE TABLE IF NOT EXISTS `COMPANIES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `catchPhrase` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `bs` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.DAILYCOVIDTRACKER
+CREATE TABLE IF NOT EXISTS `DAILYCOVIDTRACKER` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `data` json NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20230408 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.FORMS
+CREATE TABLE IF NOT EXISTS `FORMS` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `url` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.ITEMS
+CREATE TABLE IF NOT EXISTS `ITEMS` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `url` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.MOVES
+CREATE TABLE IF NOT EXISTS `MOVES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `url` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=302 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON
+CREATE TABLE IF NOT EXISTS `POKEMON` (
+  `base_experience` int NOT NULL,
+  `height` decimal(20,2) NOT NULL,
+  `id` int NOT NULL,
+  `location_area_encounters` varchar(200) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET latin1 COLLATE latin1_spanish_ci NOT NULL,
+  `species` int NOT NULL,
+  `sprites` int DEFAULT NULL,
+  `weight` decimal(20,2) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_POKEMON_SPECIES` (`species`),
+  KEY `FK_POKEMON_SPRITES` (`sprites`),
+  CONSTRAINT `FK_POKEMON_SPECIES` FOREIGN KEY (`species`) REFERENCES `SPECIES` (`id`),
+  CONSTRAINT `FK_POKEMON_SPRITES` FOREIGN KEY (`sprites`) REFERENCES `SPRITES` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_ABILITIES
+CREATE TABLE IF NOT EXISTS `POKEMON_ABILITIES` (
+  `pokemon_id` int NOT NULL,
+  `ability_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`ability_id`),
+  KEY `FK_POKEMON_ABILITIES_ABILITY` (`ability_id`),
+  CONSTRAINT `FK_POKEMON_ABILITIES_ABILITY` FOREIGN KEY (`ability_id`) REFERENCES `ABILITIES` (`id`),
+  CONSTRAINT `FK_POKEMON_ABILITIES_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_FORMS
+CREATE TABLE IF NOT EXISTS `POKEMON_FORMS` (
+  `pokemon_id` int NOT NULL,
+  `form_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`form_id`),
+  KEY `FK_POKEMON_FORMS_FORM` (`form_id`),
+  CONSTRAINT `FK_POKEMON_FORMS_FORM` FOREIGN KEY (`form_id`) REFERENCES `FORMS` (`id`),
+  CONSTRAINT `FK_POKEMON_FORMS_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_ITEMS
+CREATE TABLE IF NOT EXISTS `POKEMON_ITEMS` (
+  `pokemon_id` int NOT NULL,
+  `item_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`item_id`),
+  KEY `FK_POKEMON_ITEMS_ITEM` (`item_id`),
+  CONSTRAINT `FK_POKEMON_ITEMS_ITEM` FOREIGN KEY (`item_id`) REFERENCES `ITEMS` (`id`),
+  CONSTRAINT `FK_POKEMON_ITEMS_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_MOVES
+CREATE TABLE IF NOT EXISTS `POKEMON_MOVES` (
+  `pokemon_id` int NOT NULL,
+  `move_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`move_id`),
+  KEY `FK_POKEMON_MOVES_MOVE` (`move_id`),
+  CONSTRAINT `FK_POKEMON_MOVES_MOVE` FOREIGN KEY (`move_id`) REFERENCES `MOVES` (`id`),
+  CONSTRAINT `FK_POKEMON_MOVES_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_STATS
+CREATE TABLE IF NOT EXISTS `POKEMON_STATS` (
+  `pokemon_id` int NOT NULL,
+  `stat_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`stat_id`),
+  KEY `FK_POKEMON_STATS_STAT` (`stat_id`),
+  CONSTRAINT `FK_POKEMON_STATS_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`),
+  CONSTRAINT `FK_POKEMON_STATS_STAT` FOREIGN KEY (`stat_id`) REFERENCES `STATS` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.POKEMON_TYPES
+CREATE TABLE IF NOT EXISTS `POKEMON_TYPES` (
+  `pokemon_id` int NOT NULL,
+  `type_id` int NOT NULL,
+  PRIMARY KEY (`pokemon_id`,`type_id`),
+  KEY `FK_POKEMON_TYPES_TYPE` (`type_id`),
+  CONSTRAINT `FK_POKEMON_TYPES_POKEMON` FOREIGN KEY (`pokemon_id`) REFERENCES `POKEMON` (`id`),
+  CONSTRAINT `FK_POKEMON_TYPES_TYPE` FOREIGN KEY (`type_id`) REFERENCES `TYPES` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.SPECIES
+CREATE TABLE IF NOT EXISTS `SPECIES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `url` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.SPRITES
+CREATE TABLE IF NOT EXISTS `SPRITES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `back_default` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  `back_shiny` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  `front_default` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  `front_shiny` varchar(200) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.STATS
+CREATE TABLE IF NOT EXISTS `STATS` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `base_stat` int NOT NULL,
+  `effort` int NOT NULL,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.TYPES
+CREATE TABLE IF NOT EXISTS `TYPES` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `slot` int NOT NULL,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+-- Volcando estructura para tabla educacionit-desafio5.USERS
+CREATE TABLE IF NOT EXISTS `USERS` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `username` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `email` varchar(100) COLLATE latin1_spanish_ci NOT NULL,
+  `address` int NOT NULL,
+  `phone` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `website` varchar(50) COLLATE latin1_spanish_ci NOT NULL,
+  `company` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `FK_USER_COMPANY` (`company`),
+  KEY `FK_USER_ADDRESS` (`address`),
+  CONSTRAINT `FK_USER_ADDRESS` FOREIGN KEY (`address`) REFERENCES `ADDRESSES` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `FK_USER_COMPANY` FOREIGN KEY (`company`) REFERENCES `COMPANIES` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+-- La exportación de datos fue deseleccionada.
+
+/*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40111 SET SQL_NOTES=IFNULL(@OLD_SQL_NOTES, 1) */;
+
