@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        const getAll = (url) => {
+            fetch(url)
+            .then(
+                response => response.json()
+            ).then(
+                data => console.log(data)
+            );
+        }
+
+        const getOne = (event) => {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const url = new URL(form.action);
+            const modifiedUrl = new URL(url.toString());
+            modifiedUrl.host = "localhost:8080";
+            modifiedUrl.searchParams.set("id", formData.get("id"));
+            fetch(modifiedUrl.toString())
+            .then(
+                response => response.json()
+            ).then(
+                data => console.log(data)
+            );
+        }
+    </script>
+</head>
+<body>
+    <h1>
+        Consumo de Apis
+    </h1>
+    <fieldset name="CovidTracker">
+        <legend>CovidTracker</legend>
+        <button onclick="getAll('http://localhost:8080/app-web/api/covid')">
+            Obtener Todos Los Registros Diarios
+        </button>
+        <form 
+            action="/app-web/api/covid?id="
+            method="GET"
+            onsubmit="getOne(event)"
+        >
+            <label for="id">ID:
+                <input name="id" type="number" step="1" min="20200401" max="20210307" required placeholder="20200401">
+            </label>
+            <button
+                type="submit"
+            >
+                Obtener Un Registro Diario
+            </button>
+        </form>
+    </fieldset>
+    <fieldset name="Pokemon">
+        <legend>Pokemon</legend>
+        <button onclick="getAll('http://localhost:8080/app-web/api/pokemon')">
+            Obtener Todos Los Registros
+        </button>
+        <form 
+            action="/app-web/api/pokemon?id="
+            method="GET"
+            onsubmit="getOne(event)"
+        >
+            <label for="id">ID:
+                <input name="id" type="number" step="1" min="1" max="1015" required value="1">
+            </label>
+            <button
+                type="submit"
+            >
+                Obtener Un Pokemon
+            </button>
+        </form>
+    </fieldset>
+    <fieldset name="Users">
+        <legend>Users</legend>
+        <button onclick="getAll('http://localhost:8080/app-web/api/users')">
+            Obtener Todos Los Usuarios
+        </button>
+        <form 
+            action="/app-web/api/users?id="
+            method="GET"
+            onsubmit="getOne(event)"
+        >
+            <label for="id">ID:
+                <input name="id" type="number" step="1" min="1" max="10" required value="1">
+            </label>
+            <button
+                type="submit"
+            >
+                Obtener Un Usuario
+            </button>
+        </form>
+    </fieldset>
+</body>
+</html>
